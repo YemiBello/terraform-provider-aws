@@ -404,6 +404,7 @@ func wafv2ManagedRuleGroupStatementSchema(level int) *schema.Schema {
 					Required:     true,
 					ValidateFunc: validation.StringLenBetween(1, 128),
 				},
+				"managed_rule_group_config": wafv2ManagedRuleGroupConfigSchema(),
 				"scope_down_statement": wafv2ScopeDownStatementSchema(level - 1),
 				"vendor_name": {
 					Type:         schema.TypeString,
@@ -427,6 +428,27 @@ func wafv2ExcludedRuleSchema() *schema.Schema {
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
 				"name": {
+					Type:         schema.TypeString,
+					Required:     true,
+					ValidateFunc: validation.StringLenBetween(1, 128),
+				},
+			},
+		},
+	}
+}
+
+func wafv2ManagedRuleGroupConfigSchema() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeList,
+		Optional: true,
+		Elem: &schema.Resource{
+			Schema: map[string]*schema.Schema{
+				"login_path": {
+					Type:         schema.TypeString,
+					Required:     true,
+					ValidateFunc: validation.StringLenBetween(1, 128),
+				},
+				"payload_type": {
 					Type:         schema.TypeString,
 					Required:     true,
 					ValidateFunc: validation.StringLenBetween(1, 128),
